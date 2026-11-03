@@ -1,0 +1,82 @@
+body{
+    background-color: rgb(34, 45, 49);
+    color: white;
+}
+
+#main-block{
+    background-color: rgb(39, 39, 39);
+}
+
+h1{
+    background-color: black;
+    color: rgb(54, 92, 123);
+}
+
+#mainTable tbody tr:nth-child(even) {
+    background-color:rgb(70, 70, 70);
+}
+
+td{
+    color: lightgray;
+}
+
+li.active{
+    background-color: rgb(70, 70, 70);
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+li.selected{
+    background-color: rgb(87, 103, 128);
+}
+
+ul{
+    background-color: #232323;
+}
+
+th{
+    background-color: rgb(70, 70, 70);
+}
+
+input{
+    background-color: #464646;
+    color: lightgray;
+}
+
+select{
+    background-color: #464646;
+    color: lightgray;
+}
+
+button.heavy{
+    background-color: rgb(47, 106, 154);
+}
+
+#fileNavBar li:hover{
+    background-color: #666;
+}
+
+#settings-container {
+    background-color: #2e2e2e;
+}
+
+#help-page {
+    background-color: #2e2e2e;
+}
+
+#main-title{
+    background-color: black;
+}
+
+.left-stripe{
+    background-color: black;
+}
+
+.right-stripe{
+    background-color: black;
+}
+
+a{
+    color:royalblue;
+}

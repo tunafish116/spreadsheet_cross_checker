@@ -1,148 +1,254 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>SM | Accurant</title>
+        <title>SONIC | Accurant</title>
         <link rel="icon" type="image/x-icon" href="Accurant-Logo-Small.png">
-        <style>
-#mainTable {
-  border: 2px solid #000;
-  padding: 3px;
-  border-collapse: collapse;
-  font-size: medium;
-  margin-right: 20px;
-}
+        <link rel="stylesheet" href="common.css">
+        <link rel="stylesheet" id="theme-style">
+        <script>
 
-
-#mainTable tbody tr:nth-child(even) {
-  background-color:rgb(251, 232, 211);
-}
-
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #eeeeee;
-  width: 800px;
-  margin-bottom: -2px;
-}
-
-li {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    float: left;
-    padding: 6px 12px;
-}
-
-li:hover{
-    background-color: #aaa;
-}
-
-li.active{
-    background-color: rgb(243, 213, 144);
-    border-top: 2px solid black;
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-}
-
-
-.scroll-table{
-    height: 450px; 
-    width: 800px;
-    overflow-y: auto;
-    overflow-x: auto;
-}
-
-th, td{
-    padding: 3px;
-    white-space: nowrap;
-}
-
-td{
-    padding-right: 20px;
-}
-
-th{
-    padding: 5px;
-    padding-right: 20px;
-
-    text-align: left;
-    position: sticky;
-    top: -1px;
-
-    background-color: rgb(243, 213, 144);
-}
-body{
-    background-color: green;
-    background-image: url("experimental.png"), url("experimental.png");
-    background-position-x: 0,300px;
-    background-position-y: 0, 150px;
-    background-repeat: repeat, repeat;
-}
-input[type="search"]{
-    font-size: larger;
-}
-select{
-    font-size: large;
-}
-
-table{
-    border: 2px solid #666;
-    border-collapse: collapse;
-}
-
-h3{
-    margin: 3px;
-}
-
-h1{
-    background-color:rgb(255, 255, 255);
-    color: rgb(0, 143, 38);
-    font-size: 50px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 6px;
-    text-align: center;
-    border: 4px solid #999;
-}
-
-button{
-    font-size: x-large;
-    font-weight: bold;
-    border-width: 3px;
-    border-radius: 5px;
-    background-color: lightskyblue;
-}
-
-        </style>
+        </script>
     </head>
     <body>
+        <div id="settings-container">
+            <div id="help-page">
+                <p>
+<pre>
+/**
+ * Accurant Biotech
+ * 
+ *      S preadsheet
+ *      O riented
+ *      N otation
+ *      I nconsistency
+ *      C hecker
+ * 
+ * @author Derrick Yu
+ * @version 6.5
+ */
+
+
+
+
+
+Tips: 
+
+Hover over text to read descriptions.
+
+Blacklist rows that have unrelated info, 
+or do not need to be crosschecked.
+
+Whitelist rows that need specific checking.
+
+Click on the links in the output to go to the corresponding
+cell position in the table.
+
+Click on the output items to highlight or bookmark
+important errors.
+
+
+
+
+
+
+Troubleshooting:
+
+[ Files do not open properly. ]
+Ensure the file format is .xlsx OR .csv
+Remove export headers, export trailers,
+and other extraneous data.
+
+
+
+[ Nothing is displayed in the output. ]
+Double check that only relevant rows are included.
+If not, delete ALL irrelevant rows from each spreadsheet.
+Double check that all rows are in the same order.
+If not, sort all spreadsheets by the same columns in excel.
+You may need to use a multi-layered sort if there is no
+unqiue identifier column to sort by. (ID Column)
+
+If you are still having issues:
+If all columns you need cross checked
+are correctly matched in the output,
+The matched columns have no format errors or inconsistencies.
+If the columns you need cross checked 
+are not matched together,
+Try increasing the Error Tolerance.
+
+
+
+[ Too much is displayed in the output. ]
+Click on the column headers to blacklist 
+unwanted column matches.
+OR
+Select "Whitelist" from the dropdown in the top
+menu and select only the columns you want cross checked.
+OR
+Decrease the Error Tolerance
+
+
+
+
+
+
+Limitations:
+
+May, in certain cases mark correct data as mismatched 
+due to extraneous column matching.
+
+Spreadsheets should have at least 20 rows.
+This is a soft limit, but the program may not function
+as expected with very small amounts of data.
+
+The auto checking algorithm can only cross check rows
+that are in order. The program will detect row shifts and 
+output a red warning if it has found one, however the first 
+10 rows must be in the correct order for it to detect 
+row shifts.
+
+If the first 10 rows are not in the correct order,
+no checks may run at all.
+
+
+
+
+
+
+
+</pre>
+                </p>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <p style = "margin-right: 100px;">Dark mode</p>
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" id="dark-toggle" onclick="toggleDark()">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p title="If disabled, output is sorted by columns.">Sort Output By Row</p>
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" id="sort-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p title="Columns with uniform values are checked for inconsistencies within the column.">Check Uniform Columns</p>
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" id="column-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p title="Blank cell mismatches and format errors are displayed in the output.">Show Null Values</p>
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" id="null-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                <br>
+                <tr>
+                    <td>
+                        <p title="The proportion of discrepancies the algorithm will tolerate when matching columns. Avoid setting above 0.1">Error Tolerance</p>
+                    </td>
+                    <td>
+                        <input type="number" id="error-tolerance-input" min="0" max="1" step="0.01">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p title="The sample size proportion the algorithm will take when analyzing and matching columns. Avoid setting below 0.1 unless you know what you're doing.">Check Proportion</p>
+                    </td>
+                    <td>
+                        <input type="number" id="check-proportion-input" min="0" max="1" step="0.01">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p title="">Matched Set Threshold</p>
+                    </td>
+                    <td>
+                        <input type="number" id="MCThreshold-input" min="0" max="1" step="0.01">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p title="">Matched Set Tolerance</p>
+                    </td>
+                    <td>
+                        <input type="number" id="MCTolerance-input" min="1" max="50" step="1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p title="">Shift Scan Start Row</p>
+                    </td>
+                    <td>
+                        <input type="number" id="rowShiftCheckLength-input" min="1" max="50" step="1">
+                    </td>
+                </tr>
+            </table>
+                <button onclick="restoreDefault()" style="margin-left: 23px; margin-top: 4px;" 
+                    title="Cannot be cancelled. Calls a function that resets all cookies.">&nbsp;&nbsp;Restore Default&nbsp;&nbsp;</button>
+            <br>
+            <br>
+            <ul class="horizontal" style="margin-left: 20px;">
+                <li>
+                    <button onclick="saveSettings()">&nbsp;&nbsp;Save&nbsp;&nbsp;</button>
+                </li>
+                <li>
+                    <button onclick="cancelSettings()">&nbsp;&nbsp;Cancel&nbsp;&nbsp;</button>
+                </li>
+                <li>
+                    <button onclick="aboutClicked()" id="about-button">&nbsp;&nbsp;Help&nbsp;&nbsp;</button>
+                </li>
+            </ul>
+        </div>
         <table style="margin: auto; border: none;">
             <tr>
-                <td style="padding: 20px; border: none; background-color: whitesmoke;">
-                    <h1 style="margin-top: 0px;">Accurant Sample Manager</h1>
+                <td style="padding: 20px; border: none;" id="main-block">
+                    <div id="main-title">
+                        <h1 style="margin-top: 0px;">Accurant Sample Manager</h1>
+                    </div>
+                    <br><br>
                     <table id="temp">
                         <tr>
-                            <td>
-                                <input type="file" id="fileInput">
+                            <td class="horizontal">
+                                    <input type="file" id="fileInput" accept=".csv,.xlsx" multiple>
+                                    <button onclick="deleteCurrentFile()" title="Remove the spreadsheet that is currently open.">Delete File</button>
+                                    <button onclick="openSettings()" style="margin-left: 20px;">Advanced Settings</button>
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <input type="search" id="searchBar" oninput="updateTable()" placeholder="Search">
-                            </td>
-                            <td>
-                                <h3>Filter By</h3>
-                            </td>
-                            <td>
-                                <select id="selectFilter" onchange="updateTable()"></select>
+                            <td class="horizontal">
+                                    <input type="search" id="searchBar" oninput="updateTable()" placeholder="Search">
+                                    <h3 style="margin-left: 20px;" title="Filter your search to a specific column.">Filter By</h3>
+                                    <select id="selectFilter" onchange="updateTable()"></select>
                             </td>
                         </tr>
                     </table>
                     <table style="margin-top: -1.5px;">
                         <tr>
                             <td>
-                                <h3>Sort By</h3>
+                                <h3 title="Sort rows alphanumerically by the given column in ascending or descending order.">Sort By</h3>
                             </td>
                             <td>
                                 <select id="selectSort" onchange="updateTable()"></select>
@@ -152,25 +258,44 @@ button{
                             </td>
                         </tr>
                     </table>
+                    <table style="margin-top: -1.5px;">
+                        <tr>
+                            <td>
+                                <select id="selectIgnore" title="Click on a column header to select it.">
+                                    <option title="Blacklisted columns will not be cross checked.">Blacklist</option>
+                                    <option title="Only whitelisted columns will be cross checked.">Whitelist</option>
+                                </select>
+                            </td>
+                            <td>
+                                <h3 title="Click on a column header to select it.">Selected Columns</h3>
+                            </td>
+                        </tr>
+                    </table>
                     <br><br>
                     <ul id="fileNavBar">
                     </ul>
                     <div class="scroll-table">
                         <table id="mainTable"></table>
                     </div>
-                    <br><br>
-                    <button onclick="RUN_AUTO_CROSSCHECK()">Run Cross Check</button>
-                    <br><br>
-                    <button onclick="downloadExcel()">Download selection as Excel</button>
+                    <br>
+                    <button onclick="RUN_AUTO_CROSSCHECK()" class="heavy" title="Automatically cross check data between uploaded files.">Run Cross Check</button>
+                    <button onclick="downloadExcel()" class="heavy" title="Download the currently displayed rows as an excel file.">Download Selection</button>
+                    <p style="margin-bottom: -1px; padding-left: 20px; padding-bottom: 3px;" id="progress-text"></p>
+                    <div id="progress-bar"></div>
+                    <div id="pdf-export">
+                        <pre>
+                            <ul id="output-list"></ul>
+                        </pre>
+                    </div>
                     <br><br><br><br>
                 </td>
             </tr>
         </table>
+        <br><br>
 
         <script src="jquery-3.7.1.min.js"></script>
         <script src="xlsx.full.min.js"></script>
-        <script src="string_comparator.js"></script>
         <script src="script.js"></script>
-
+        <script src="string_comparator.js"></script>
     </body>
 </html>

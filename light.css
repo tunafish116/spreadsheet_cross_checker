@@ -1,0 +1,63 @@
+body{
+    background-color: lightblue;
+}
+
+#main-block{
+    background-color: whitesmoke;
+}
+
+h1{
+    background-color: white;
+    color: rgb(0, 91, 143);
+}
+
+#mainTable tbody tr:nth-child(even) {
+    background-color:rgb(251, 232, 211);
+}
+
+li.active{
+    background-color: rgb(243, 213, 144);
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+li.selected{
+    background-color: rgb(144, 182, 243);
+}
+
+ul{
+    background-color: #eeeeee;
+}
+
+th{
+    background-color: rgb(243, 213, 144);
+}
+
+button.heavy{
+    background-color: lightskyblue;
+}
+
+#fileNavBar li:hover{
+    background-color: #aaa;
+}
+
+#settings-container{
+    background-color: #eee;
+}
+
+#help-page{
+    background-color: #eee;
+}
+
+#main-title{
+    background-color: white;
+}
+
+.left-stripe{
+    background-color: white;
+}
+
+.right-stripe{
+    background-color: white;
+}
