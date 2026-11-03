@@ -1,3 +1,12 @@
+/**
+ * This file contains everything not related to the main algorithm of the 
+ * spreadsheet cross checker. It handles UI file importing, table generation,
+ * filtering, sorting, and downloading the selection.
+ * 
+ * @version 6.5
+ * @author Derrick Yu
+ */
+
 //*************UI stuff*****************//
 
 function setCookie(cname, cvalue, exdays) {

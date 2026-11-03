@@ -9,6 +9,9 @@
  * 
  * @author Derrick Yu
  * @version 6.5
+ * 
+ * this file contains the main algorithm for the spreadsheet cross checker.
+ * It is a monolithic function that is called when the user clicks the "Cross Check" button.
  */
 
 
@@ -1353,5 +1356,7 @@ function aboutClicked(){
     }
 }
 
-
+function openGuide(){
+    window.open("https://drive.google.com/file/d/1HXON0_EYo3EplJ1WbUz7OZ3RVxWSO7Yb/view?usp=sharing", "_blank");
+}
 
